@@ -26,6 +26,19 @@ class Crawler
         $this->dom = new DOMXpath($doc);
     }
 
+    public function getElements($path)
+    {
+        $query = $this->buildQuery($path);
+
+        $elements = $this->dom->query($query);
+
+        if ($elements->count() === 0) {
+            return false;
+        }
+
+        return $elements;
+    }
+
     public function getElementsByTagName($tagName)
     {
         $query = "//$tagName";
@@ -58,6 +71,32 @@ class Crawler
         }
 
         return trim($element->textContent);
+    }
+
+    private function buildQuery($path)
+    {
+        $pathArray = explode(' ', $path);
+
+        $pathArray = array_map(function ($p) {
+            if (strpos($p, '.') !== false) {
+                $q = explode('.', $p);
+                $q = $q[0] . '[contains(@class, "' . $q[1] . '")]';
+
+                return $q;
+            } elseif (strpos($p, '#') !== false) {
+                $q = explode('#', $p);
+                $q = $q[0] . '[contains(@id, "' . $q[1] . '")]';
+
+                return $q;
+            } else {
+                return $p;
+            }
+        }, $pathArray);
+
+        $query = implode('/', $pathArray);
+        $query = "//$query";
+        
+        return $query;
     }
 
     private function getHtml()
