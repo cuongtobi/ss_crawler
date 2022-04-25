@@ -1,0 +1,29 @@
+{
+    "name": "cuongtobi/ss_crawler",
+    "description": "A Super Simple Crawler",
+    "keywords": [
+        "crawler",
+        "dom parser"
+    ],
+    "homepage": "https://cuongtobi.github.io",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vuong Cuong",
+            "email": "cuongtobi29@gmail.com",
+            "homepage": "https://cuongtobi.github.io"
+        }
+    ],
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "SS\\": "src/"
+        }
+    },
+    "scripts": {
+        "start": "php -S localhost:8081 -t examples",
+        "convention": "vendor/bin/phpcs"
+    }
+}
