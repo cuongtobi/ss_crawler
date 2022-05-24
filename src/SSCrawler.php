@@ -62,6 +62,18 @@ class Crawler
         return $elements->item(0);
     }
 
+    public function getMetaTag($name)
+    {
+        $query = "//meta[contains(@name, \"$name\")]";
+        $elements = $this->dom->query($query);
+
+        if ($elements->count() === 0) {
+            return false;
+        }
+
+        return $elements->item(0)->attributes->getNamedItem('content')->value;
+    }
+
     public function getPageTitle()
     {
         $element = $this->getFirstElementByTagName('title');
@@ -71,6 +83,17 @@ class Crawler
         }
 
         return trim($element->textContent);
+    }
+
+    public function getPageDescription()
+    {
+        $element = $this->getMetaTag('description');
+
+        if (!$element) {
+            return false;
+        }
+
+        return $element;
     }
 
     private function buildQuery($path)

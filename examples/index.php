@@ -9,5 +9,5 @@ $crawler = new Crawler(
 );
 
 echo "<pre>";
-var_dump($crawler->getElements('article div.article-content p')->item(0));
+var_dump($crawler->getPageDescription());
 echo "</pre>";
